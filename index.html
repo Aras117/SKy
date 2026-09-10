@@ -13,6 +13,10 @@
     const out = document.getElementById('out');
     document.getElementById('go').onclick = function () {
       out.textContent = 'Asking for location...';
+      if (!navigator.geolocation) {
+        out.textContent = 'No geolocation support';
+        return;
+      }
       navigator.geolocation.getCurrentPosition(
         function (pos) {
           out.textContent =
@@ -20,8 +24,9 @@
             ', Lng ' + pos.coords.longitude.toFixed(4);
         },
         function (err) {
-          out.textContent = 'Failed: ' + err.message;
-        }
+          out.textContent = 'Failed (' + err.code + '): ' + err.message;
+        },
+        { timeout: 10000, enableHighAccuracy: true }
       );
     };
   </script>
