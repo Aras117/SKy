@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sky Claim</title>
+</head>
+<body style="font-family: sans-serif; padding: 2rem; text-align: center;">
+  <h1>Sky Claim</h1>
+  <p id="out">Not started</p>
+  <button id="go" style="font-size: 18px; padding: 12px 24px;">Where am I?</button>
+
+  <script>
+    const out = document.getElementById('out');
+    document.getElementById('go').onclick = function () {
+      out.textContent = 'Asking for location...';
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          out.textContent =
+            'Lat ' + pos.coords.latitude.toFixed(4) +
+            ', Lng ' + pos.coords.longitude.toFixed(4);
+        },
+        function (err) {
+          out.textContent = 'Failed: ' + err.message;
+        }
+      );
+    };
+  </script>
+</body>
+</html>
